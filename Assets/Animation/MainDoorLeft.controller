@@ -85,7 +85,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: cuachinhtraidong
+  m_Name: MDL_Close
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -111,7 +111,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: cuachinhtrai
+  m_Name: MainDoorLeft
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: open
@@ -165,7 +165,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: cuachinhtraimo
+  m_Name: MDL_Open
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
