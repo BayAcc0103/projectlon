@@ -44,6 +44,15 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""aff15a2a-6bb6-42fd-9846-7592fae6edb0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -112,6 +121,17 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb289140-d857-4068-8970-f6cd71327807"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,6 +142,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         m_walk = asset.FindActionMap("walk", throwIfNotFound: true);
         m_walk_Move = m_walk.FindAction("Move", throwIfNotFound: true);
         m_walk_Jump = m_walk.FindAction("Jump", throwIfNotFound: true);
+        m_walk_Look = m_walk.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,12 +206,14 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
     private List<IWalkActions> m_WalkActionsCallbackInterfaces = new List<IWalkActions>();
     private readonly InputAction m_walk_Move;
     private readonly InputAction m_walk_Jump;
+    private readonly InputAction m_walk_Look;
     public struct WalkActions
     {
         private @Playerinput m_Wrapper;
         public WalkActions(@Playerinput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_walk_Move;
         public InputAction @Jump => m_Wrapper.m_walk_Jump;
+        public InputAction @Look => m_Wrapper.m_walk_Look;
         public InputActionMap Get() { return m_Wrapper.m_walk; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -206,6 +229,9 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
         }
 
         private void UnregisterCallbacks(IWalkActions instance)
@@ -216,6 +242,9 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
         }
 
         public void RemoveCallbacks(IWalkActions instance)
@@ -237,5 +266,6 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnLook(InputAction.CallbackContext context);
     }
 }
