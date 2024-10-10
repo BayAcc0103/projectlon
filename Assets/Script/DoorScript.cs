@@ -13,7 +13,7 @@ public class DoorScript : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Character"))
+        if (other.CompareTag("Player"))
         {
             if (!_isOpen)
             {
@@ -24,7 +24,7 @@ public class DoorScript : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Character"))
+        if (other.CompareTag("Player"))
         {
             StartCoroutine(CloseDoorAfterDelay(3f)); // Đặt thời gian đóng cửa
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Look : MonoBehaviour
 {
-    public Camera cam;
+    public Transform cam;
     public float xRotation = 0.0f;
 
     public float xSens = 30.0f;
