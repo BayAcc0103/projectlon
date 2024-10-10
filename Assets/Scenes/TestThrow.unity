@@ -680,7 +680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 1093469871}
   attackPoint: {fileID: 499462695}
-  objectToThrow: {fileID: 3328473847981640049, guid: 56ea9500696572749bba4bfefd37efd7, type: 3}
+  objectToThrow: {fileID: 7591346101983374884, guid: 56c5ebb5c6c2d704590f8d14332d7a43, type: 3}
   totalThrows: 100
   throwCooldown: 0
   throwKey: 323
@@ -770,7 +770,7 @@ Transform:
   m_GameObject: {fileID: 1254977071}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73, y: 5.03, z: -94.42}
+  m_LocalPosition: {x: 73, y: 5.12, z: -94.42}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1004,7 +1004,7 @@ Transform:
   m_GameObject: {fileID: 1984812548}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 73.00841, y: 5.551509, z: -94.45987}
+  m_LocalPosition: {x: 73.00841, y: 5.6415086, z: -94.45987}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
