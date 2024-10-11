@@ -21,28 +21,19 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode jumpKey = KeyCode.Space;
     public KeyCode sprintKey = KeyCode.LeftShift;
 
-    [Header("CounterMovement")]
+    [Header("Speed Limits")]
     public float maxSpeed;
     public float walkMaxSpeed;
     public float sprintMaxSpeed;
     public float airMaxSpeed;
 
-    [Header("Ground Detection")]
-    public LayerMask whatIsGround;
-    public Transform groundCheck;
-    public float groundCheckRadius;
-
     private float horizontalInput;
     private float verticalInput;
-
-    public bool grounded;
 
     private Vector3 moveDirection;
     private Vector3 slopeMoveDirection;
 
     private Rigidbody rb;
-
-    RaycastHit slopeHit;
 
     public TextMeshProUGUI text_speed;
 
@@ -54,19 +45,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        // ground check
-        grounded = Physics.CheckSphere(groundCheck.position, groundCheckRadius, whatIsGround);
-
         MyInput();
         ControlSpeed();
 
-        if (Input.GetKeyDown(jumpKey) && grounded)
+        if (Input.GetKeyDown(jumpKey))
         {
             // Jump
             Jump();
         }
-
-        slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
     }
 
     private void FixedUpdate()
@@ -82,15 +68,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void ControlSpeed()
     {
-        if (grounded && Input.GetKey(sprintKey))
+        if (Input.GetKey(sprintKey))
             maxSpeed = sprintMaxSpeed;
-
-        else if (grounded)
+        else
             maxSpeed = walkMaxSpeed;
-
-        // no specific airMaxSpeed for now;
-        //else
-        //    maxSpeed = airMaxSpeed;
     }
 
     private void MovePlayer()
@@ -98,14 +79,14 @@ public class PlayerMovement : MonoBehaviour
         float x = horizontalInput;
         float y = verticalInput;
 
-        //Find actual velocity relative to where player is looking
+        // Find actual velocity relative to where player is looking
         Vector2 mag = FindVelRelativeToLook();
         float xMag = mag.x, yMag = mag.y;
 
-        //Counteract sliding and sloppy movement
+        // Counteract sliding and sloppy movement
         CounterMovement(x, y, mag);
 
-        //If speed is larger than maxspeed, cancel out the input so you don't go over max speed
+        // If speed is larger than maxspeed, cancel out the input so you don't go over max speed
         if (x > 0 && xMag > maxSpeed) x = 0;
         if (x < 0 && xMag < -maxSpeed) x = 0;
         if (y > 0 && yMag > maxSpeed) y = 0;
@@ -113,19 +94,10 @@ public class PlayerMovement : MonoBehaviour
 
         moveDirection = orientation.forward * y + orientation.right * x;
 
-        // on slope
-        if (OnSlope())
-            rb.AddForce(slopeMoveDirection.normalized * moveSpeed * moveMultiplier, ForceMode.Force);
+        // Apply movement
+        rb.AddForce(moveDirection.normalized * moveSpeed * moveMultiplier, ForceMode.Force);
 
-        // on ground
-        else if(grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * moveMultiplier, ForceMode.Force);
-
-        // in air
-        else if(!grounded)
-            rb.AddForce(moveDirection.normalized * moveSpeed * moveMultiplier * airMultiplier, ForceMode.Force);
-
-        // limit rb velocity
+        // Limit rb velocity
         Vector3 rbFlatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         if (rbFlatVelocity.magnitude > maxSpeed)
@@ -137,21 +109,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
-        if (!grounded)
-            return;
-
-        // reset rb y velocity
+        // Reset rb y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
     private void CounterMovement(float x, float y, Vector2 mag)
     {
-        if (!grounded) return;
-
         float threshold = 0.01f;
 
-        //Counter movement
+        // Counter movement
         if (Mathf.Abs(mag.x) > threshold && Mathf.Abs(x) < 0.05f || (mag.x < -threshold && x > 0) || (mag.x > threshold && x < 0))
         {
             rb.AddForce(moveSpeed * orientation.transform.right * Time.deltaTime * -mag.x * counterMovement);
@@ -162,17 +129,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private bool OnSlope()
-    {
-        if(Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.5f))
-        {
-            if (slopeHit.normal != Vector3.up)
-                return true;
-        }
-
-        return false;
-    }
-
     public Vector2 FindVelRelativeToLook()
     {
         float lookAngle = orientation.transform.eulerAngles.y;
@@ -181,9 +137,9 @@ public class PlayerMovement : MonoBehaviour
         float u = Mathf.DeltaAngle(lookAngle, moveAngle);
         float v = 90 - u;
 
-        float magnitue = rb.velocity.magnitude;
-        float yMag = magnitue * Mathf.Cos(u * Mathf.Deg2Rad);
-        float xMag = magnitue * Mathf.Cos(v * Mathf.Deg2Rad);
+        float magnitude = rb.velocity.magnitude;
+        float yMag = magnitude * Mathf.Cos(u * Mathf.Deg2Rad);
+        float xMag = magnitude * Mathf.Cos(v * Mathf.Deg2Rad);
 
         return new Vector2(xMag, yMag);
     }
