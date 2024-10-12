@@ -1,4 +1,4 @@
-    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,6 +35,9 @@ public class ProjectileAddon : MonoBehaviour
 
             // destroy projectile
             Destroy(gameObject);
+        }else
+        {
+        	Destroy(gameObject,4.0f);
         }
 
         // make sure projectile sticks to surface

@@ -7564,7 +7564,6 @@ GameObject:
   - component: {fileID: 477515611}
   - component: {fileID: 477515610}
   - component: {fileID: 477515608}
-  - component: {fileID: 477515612}
   - component: {fileID: 477515613}
   m_Layer: 6
   m_Name: Player
@@ -7626,8 +7625,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe6218dc676e93469e0210abfdb6098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 50
-  sensY: 50
+  sensX: 80
+  sensY: 80
   cam: {fileID: 867374994}
   orientation: {fileID: 2144773150}
 --- !u!54 &477515611
@@ -7657,27 +7656,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &477515612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477515606}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67e70ce50528ca9409d7aa0eea47dbea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AudioSource: {fileID: 816147133}
-  grass: {fileID: 8300000, guid: dc3ebfddfabdba14c831eced860312d7, type: 3}
-  metal: {fileID: 8300000, guid: 52243c1216c86e343b5181d74ec3d4dd, type: 3}
-  road: {fileID: 0}
-  RayStart: {fileID: 1149947243}
-  range: 100
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &477515613
 MonoBehaviour:
   m_ObjectHideFlags: 0
