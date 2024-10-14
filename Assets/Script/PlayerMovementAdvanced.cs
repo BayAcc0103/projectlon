@@ -31,7 +31,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     float horizontalInput;
     float verticalInput;
 
-    Vector3 moveDirection;
+    public Vector3 moveDirection;
 
     Rigidbody rb;
 
@@ -99,7 +99,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
         // limit velocity if needed
         if(flatVel.magnitude > moveSpeed)
-        {
+        {   
             Vector3 limitedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
