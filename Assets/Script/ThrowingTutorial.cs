@@ -9,6 +9,8 @@ public class ThrowingTutorial : MonoBehaviour
     public Transform cam;
     public Transform attackPoint;
     public GameObject objectToThrow;
+    public AudioSource audioSource; // Reference to the AudioSource component
+    public AudioClip throwSound; // Reference to the sound effect
 
     [Header("Settings")]
     public int totalThrows;
@@ -58,6 +60,12 @@ public class ThrowingTutorial : MonoBehaviour
         Vector3 forceToAdd = forceDirection * throwForce + transform.up * throwUpwardForce;
 
         projectileRb.AddForce(forceToAdd, ForceMode.Impulse);
+
+        // Play throw sound
+        if (audioSource != null && throwSound != null)
+        {
+            audioSource.PlayOneShot(throwSound);
+        }
 
         totalThrows--;
 
