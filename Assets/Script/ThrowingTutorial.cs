@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -11,6 +11,7 @@ public class ThrowingTutorial : MonoBehaviour
     public GameObject objectToThrow;
     public AudioSource audioSource; // Reference to the AudioSource component
     public AudioClip throwSound; // Reference to the sound effect
+    public TextMeshProUGUI throwCountText;
 
     [Header("Settings")]
     public int totalThrows;
@@ -26,6 +27,7 @@ public class ThrowingTutorial : MonoBehaviour
     private void Start()
     {
         readyToThrow = true;
+        UpdateThrowCountDisplay();
     }
 
     private void Update()
@@ -68,13 +70,24 @@ public class ThrowingTutorial : MonoBehaviour
         }
 
         totalThrows--;
+        UpdateThrowCountDisplay();
 
         // implement throwCooldown
         Invoke(nameof(ResetThrow), throwCooldown);
     }
 
+    private void UpdateThrowCountDisplay()
+    {
+        // Cập nhật văn bản TextMeshPro với số lượng ném còn lại
+        throwCountText.text = "" + totalThrows;
+    }
     private void ResetThrow()
     {
         readyToThrow = true;
+    }
+    public void ResetThrowCount(int newTotalThrows)
+    {
+        totalThrows = newTotalThrows;
+        UpdateThrowCountDisplay(); // Cập nhật hiển thị
     }
 }

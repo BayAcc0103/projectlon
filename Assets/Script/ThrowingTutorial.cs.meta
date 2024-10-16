@@ -3,7 +3,13 @@ guid: 5db17708ae6548e4584a9df9fc8079e8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cam: {instanceID: 0}
+  - attackPoint: {instanceID: 0}
+  - objectToThrow: {fileID: 8656655253640310803, guid: 1f1f5801df128ab41b54a250ae82b899, type: 3}
+  - audioSource: {instanceID: 0}
+  - throwSound: {instanceID: 0}
+  - throwCountText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro; // Include this for TextMeshPro
 
 public class CountdownTimerTMP : MonoBehaviour
@@ -8,6 +8,7 @@ public class CountdownTimerTMP : MonoBehaviour
     private bool isRunning = true;
     public AudioSource audioSource; // Reference to the AudioSource component
     public AudioClip endSound; // Reference to the sound effect
+    public ThrowingTutorial throwingTutorial;
 
     void Update()
     {
@@ -42,5 +43,11 @@ public class CountdownTimerTMP : MonoBehaviour
         {
             audioSource.PlayOneShot(endSound);
         }
+    }
+    public void ResetTimer()
+    {
+        timeRemaining = 10; // Reset to initial time
+        isRunning = true; // Restart the timer
+        UpdateTimerText(); // Update the display
     }
 }
