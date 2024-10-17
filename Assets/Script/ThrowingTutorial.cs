@@ -27,12 +27,12 @@ public class ThrowingTutorial : MonoBehaviour
 	private void Start()
 	{
 		readyToThrow = true;
-		//UpdateThrowCountDisplay();
+		UpdateThrowCountDisplay();
 	}
 
 	private void Update()
 	{
-		if(Input.GetKeyDown(throwKey) && readyToThrow && totalThrows > 0)
+		if (Input.GetKeyDown(throwKey) && readyToThrow && totalThrows > 0)
 		{
 			Throw();
 		}
@@ -53,7 +53,7 @@ public class ThrowingTutorial : MonoBehaviour
 
 		RaycastHit hit;
 
-		if(Physics.Raycast(cam.position, cam.forward, out hit, 500f))
+		if (Physics.Raycast(cam.position, cam.forward, out hit, 500f))
 		{
 			forceDirection = (hit.point - attackPoint.position).normalized;
 		}
@@ -70,18 +70,18 @@ public class ThrowingTutorial : MonoBehaviour
 		}
 
 		totalThrows--;
-		//UpdateThrowCountDisplay();
+		UpdateThrowCountDisplay();
 
 		// implement throwCooldown
 		Invoke(nameof(ResetThrow), throwCooldown);
 	}
 
-	// private void UpdateThrowCountDisplay()
-	// {
-	// 	// Cập nhật văn bản TextMeshPro với số lượng ném còn lại
-	// 	throwCountText.text = "" + totalThrows;
-	// }
-	
+	private void UpdateThrowCountDisplay()
+	{
+		// Cập nhật văn bản TextMeshPro với số lượng ném còn lại
+		throwCountText.text = "" + totalThrows;
+	}
+
 	private void ResetThrow()
 	{
 		readyToThrow = true;
@@ -89,6 +89,6 @@ public class ThrowingTutorial : MonoBehaviour
 	public void ResetThrowCount(int newTotalThrows)
 	{
 		totalThrows = newTotalThrows;
-		//UpdateThrowCountDisplay(); // Cập nhật hiển thị
+		UpdateThrowCountDisplay(); // Cập nhật hiển thị
 	}
 }

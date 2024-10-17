@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class SwordSwing : MonoBehaviour
 {
-    public Transform swordTransform;   // Reference to the cube (sword)
+    public Transform swordTransform;   // Reference to the sword
     public float swingSpeed = 5f;      // Speed of the swing
     public float swingAngle = 45f;     // Max angle for the swing
     private Vector3 initialRotation;   // Store initial rotation
     private bool isSwinging = false;
-
+   
     private void Start()
     {
-        // Store the cube's initial rotation
+        // Store the sword's initial rotation
         initialRotation = swordTransform.localEulerAngles;
     }
 
@@ -33,7 +33,7 @@ public class SwordSwing : MonoBehaviour
         while (elapsedTime < 1f)
         {
             float angle = Mathf.Lerp(0f, swingAngle, elapsedTime);
-            swordTransform.localEulerAngles = new Vector3(initialRotation.x, initialRotation.y, initialRotation.z + angle);
+            swordTransform.localEulerAngles = new Vector3(initialRotation.x + angle, initialRotation.y, initialRotation.z);
             elapsedTime += Time.deltaTime * swingSpeed;
             yield return null;
         }
@@ -44,7 +44,7 @@ public class SwordSwing : MonoBehaviour
         while (elapsedTime < 1f)
         {
             float angle = Mathf.Lerp(swingAngle, 0f, elapsedTime);
-            swordTransform.localEulerAngles = new Vector3(initialRotation.x, initialRotation.y, initialRotation.z + angle);
+            swordTransform.localEulerAngles = new Vector3(initialRotation.x + angle, initialRotation.y, initialRotation.z);
             elapsedTime += Time.deltaTime * swingSpeed;
             yield return null;
         }
