@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,19 +12,23 @@ public class EnemyAI : MonoBehaviour
 
 	public float health;
 
-	//Patroling
+	// Patroling
 	public Vector3 walkPoint;
 	bool walkPointSet;
 	public float walkPointRange;
 
-	//Attacking
+	// Attacking
 	public float timeBetweenAttacks;
 	bool alreadyAttacked;
+	public int meleeDamage = 0;
 	public GameObject projectile;
 
-	//States
-	public float sightRange, attackRange;
-	public bool playerInSightRange, playerInAttackRange;
+
+	PlayerHealth playerHealth;
+
+	// States
+	public float sightRange, attackRange, meleeAttackRange;
+	public bool playerInSightRange, playerInAttackRange, playerInMeleeAttackRange;
 
 	private void Awake()
 	{
@@ -42,13 +47,15 @@ public class EnemyAI : MonoBehaviour
 
 	private void Update()
 	{
-		//Check for sight and attack range
+		// Check for sight, attack, and melee range
 		playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
 		playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
+		playerInMeleeAttackRange = Physics.CheckSphere(transform.position, meleeAttackRange, whatIsPlayer);
 
 		if (!playerInSightRange && !playerInAttackRange) Patroling();
-		if (playerInSightRange && !playerInAttackRange) ChasePlayer();
-		if (playerInAttackRange && playerInSightRange) AttackPlayer();
+		if (playerInMeleeAttackRange && playerInSightRange) MeleeAttackPlayer(); // Prioritize melee attack
+		else if (playerInAttackRange && playerInSightRange) AttackPlayer();     // Then ranged attack
+		else if (playerInSightRange) ChasePlayer();
 	}
 
 	private void Patroling()
@@ -60,13 +67,14 @@ public class EnemyAI : MonoBehaviour
 
 		Vector3 distanceToWalkPoint = transform.position - walkPoint;
 
-		//Walkpoint reached
+		// Walkpoint reached
 		if (distanceToWalkPoint.magnitude < 1f)
 			walkPointSet = false;
 	}
+
 	private void SearchWalkPoint()
 	{
-		//Calculate random point in range
+		// Calculate random point in range
 		float randomZ = Random.Range(-walkPointRange, walkPointRange);
 		float randomX = Random.Range(-walkPointRange, walkPointRange);
 
@@ -83,24 +91,56 @@ public class EnemyAI : MonoBehaviour
 
 	private void AttackPlayer()
 	{
-		//Make sure enemy doesn't move
+		// Make sure enemy doesn't move
 		agent.SetDestination(transform.position);
 
 		transform.LookAt(player);
 
 		if (!alreadyAttacked)
 		{
-			///Attack code here
+			// Ranged attack code here
 			Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
 			rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
 			rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-			//Destroy(projectile,5.0f);
-			///End of attack code
 
 			alreadyAttacked = true;
 			Invoke(nameof(ResetAttack), timeBetweenAttacks);
 		}
 	}
+
+	private void MeleeAttackPlayer()
+	{
+		// Make sure the enemy doesn't move
+		agent.SetDestination(transform.position);
+
+		// Look at the player
+		transform.LookAt(player);
+
+		if (!alreadyAttacked)
+		{
+			// Trigger the sword swing animation
+			SwordSwing swordSwing = GetComponentInChildren<SwordSwing>();
+			if (swordSwing != null)
+			{
+				swordSwing.StartSwing();
+			}
+
+			// Deal damage to the player
+			PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+			if (playerHealth != null)
+			{
+				int damageAmount = meleeDamage;
+				playerHealth.TakeDamage(damageAmount);  // Deal damage to the player
+			}
+
+			alreadyAttacked = true;
+			Invoke(nameof(ResetAttack), timeBetweenAttacks);  // Set up the cooldown between attacks
+		}
+	}
+
+
+
+
 	private void ResetAttack()
 	{
 		alreadyAttacked = false;
@@ -112,6 +152,7 @@ public class EnemyAI : MonoBehaviour
 
 		if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
 	}
+
 	private void DestroyEnemy()
 	{
 		Destroy(gameObject);
@@ -121,9 +162,9 @@ public class EnemyAI : MonoBehaviour
 	{
 		Gizmos.color = Color.red;
 		Gizmos.DrawWireSphere(transform.position, attackRange);
+		Gizmos.color = Color.blue;
+		Gizmos.DrawWireSphere(transform.position, meleeAttackRange);
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(transform.position, sightRange);
 	}
-
-
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileAddon : MonoBehaviour
 {
-    public int damage;
+    public int damage ;
 
     private Rigidbody rb;
 
@@ -27,17 +27,14 @@ public class ProjectileAddon : MonoBehaviour
             targetHit = true;
 
         // check if you hit an enemy
-        if(collision.gameObject.GetComponent<BasicEnemy>() != null)
+        if(collision.gameObject.GetComponent<EnemyAI>() != null)
         {
-            BasicEnemy enemy = collision.gameObject.GetComponent<BasicEnemy>();
+            EnemyAI enemy = collision.gameObject.GetComponent<EnemyAI>();
 
             enemy.TakeDamage(damage);
-
+        
             // destroy projectile
             Destroy(gameObject);
-        }else
-        {
-        	Destroy(gameObject,4.0f);
         }
 
         // make sure projectile sticks to surface
