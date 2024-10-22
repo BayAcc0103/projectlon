@@ -24,22 +24,31 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
     ""name"": ""Playerinput"",
     ""maps"": [
         {
-            ""name"": ""walk"",
-            ""id"": ""09332b3e-a4b4-4a3c-a814-1bd14ea89094"",
+            ""name"": ""ConsoleInput"",
+            ""id"": ""31cc9d3b-0f71-4474-bd2e-b6631cf359f5"",
             ""actions"": [
                 {
                     ""name"": ""Move"",
-                    ""type"": ""Value"",
-                    ""id"": ""33c7ae88-0b4c-4f25-9b13-edbd3aa7c3aa"",
-                    ""expectedControlType"": """",
+                    ""type"": ""Button"",
+                    ""id"": ""980f083a-3310-42f0-af73-c0403cc0bc7a"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
-                    ""id"": ""fc8ea7d1-1560-462d-ad1c-047a80093992"",
+                    ""id"": ""101f51e5-366a-47a0-8ecf-3c3445ec0c57"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""8c41bc51-48f1-4cbd-9831-84cb7c0eda44"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -47,74 +56,30 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Look"",
-                    ""type"": ""Value"",
-                    ""id"": ""aff15a2a-6bb6-42fd-9846-7592fae6edb0"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""type"": ""Button"",
+                    ""id"": ""aec40da5-833d-4af0-84b8-47a2558e510c"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""WASD"",
-                    ""id"": ""a2e1dd54-e083-4aa2-a014-db66101793c0"",
-                    ""path"": ""2DVector"",
+                    ""name"": """",
+                    ""id"": ""0cc7eab1-9a6c-4475-9135-e9993ba43509"",
+                    ""path"": ""<Gamepad>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
-                    ""isComposite"": true,
+                    ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Up"",
-                    ""id"": ""5f31e83a-ca31-4a87-9563-3405de1c25f1"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Down"",
-                    ""id"": ""bb31ece5-38b6-43ba-b792-d3d9763951ce"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Left"",
-                    ""id"": ""0c4806ac-e268-401d-bfff-f78d19f0142e"",
-                    ""path"": ""<Keyboard>/A"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Right"",
-                    ""id"": ""ee6d006f-abc3-41b9-bc8f-e956b41995e2"",
-                    ""path"": ""<Keyboard>/D"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
-                    ""id"": ""bc5bb461-b20b-4838-9dbb-5a4d2927dbe2"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""018cc55d-baa4-41d8-8e38-06f57619a855"",
+                    ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -124,8 +89,19 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""cb289140-d857-4068-8970-f6cd71327807"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""id"": ""91f8a168-74e8-47c6-8107-f00216bfd675"",
+                    ""path"": ""<XInputController>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""783dbeae-2d7a-4bf7-8822-a54ce02b5bbf"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -138,11 +114,12 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // walk
-        m_walk = asset.FindActionMap("walk", throwIfNotFound: true);
-        m_walk_Move = m_walk.FindAction("Move", throwIfNotFound: true);
-        m_walk_Jump = m_walk.FindAction("Jump", throwIfNotFound: true);
-        m_walk_Look = m_walk.FindAction("Look", throwIfNotFound: true);
+        // ConsoleInput
+        m_ConsoleInput = asset.FindActionMap("ConsoleInput", throwIfNotFound: true);
+        m_ConsoleInput_Move = m_ConsoleInput.FindAction("Move", throwIfNotFound: true);
+        m_ConsoleInput_Jump = m_ConsoleInput.FindAction("Jump", throwIfNotFound: true);
+        m_ConsoleInput_Attack = m_ConsoleInput.FindAction("Attack", throwIfNotFound: true);
+        m_ConsoleInput_Look = m_ConsoleInput.FindAction("Look", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -201,40 +178,45 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // walk
-    private readonly InputActionMap m_walk;
-    private List<IWalkActions> m_WalkActionsCallbackInterfaces = new List<IWalkActions>();
-    private readonly InputAction m_walk_Move;
-    private readonly InputAction m_walk_Jump;
-    private readonly InputAction m_walk_Look;
-    public struct WalkActions
+    // ConsoleInput
+    private readonly InputActionMap m_ConsoleInput;
+    private List<IConsoleInputActions> m_ConsoleInputActionsCallbackInterfaces = new List<IConsoleInputActions>();
+    private readonly InputAction m_ConsoleInput_Move;
+    private readonly InputAction m_ConsoleInput_Jump;
+    private readonly InputAction m_ConsoleInput_Attack;
+    private readonly InputAction m_ConsoleInput_Look;
+    public struct ConsoleInputActions
     {
         private @Playerinput m_Wrapper;
-        public WalkActions(@Playerinput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Move => m_Wrapper.m_walk_Move;
-        public InputAction @Jump => m_Wrapper.m_walk_Jump;
-        public InputAction @Look => m_Wrapper.m_walk_Look;
-        public InputActionMap Get() { return m_Wrapper.m_walk; }
+        public ConsoleInputActions(@Playerinput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_ConsoleInput_Move;
+        public InputAction @Jump => m_Wrapper.m_ConsoleInput_Jump;
+        public InputAction @Attack => m_Wrapper.m_ConsoleInput_Attack;
+        public InputAction @Look => m_Wrapper.m_ConsoleInput_Look;
+        public InputActionMap Get() { return m_Wrapper.m_ConsoleInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(WalkActions set) { return set.Get(); }
-        public void AddCallbacks(IWalkActions instance)
+        public static implicit operator InputActionMap(ConsoleInputActions set) { return set.Get(); }
+        public void AddCallbacks(IConsoleInputActions instance)
         {
-            if (instance == null || m_Wrapper.m_WalkActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_WalkActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_ConsoleInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_ConsoleInputActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
         }
 
-        private void UnregisterCallbacks(IWalkActions instance)
+        private void UnregisterCallbacks(IConsoleInputActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -242,30 +224,34 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
         }
 
-        public void RemoveCallbacks(IWalkActions instance)
+        public void RemoveCallbacks(IConsoleInputActions instance)
         {
-            if (m_Wrapper.m_WalkActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_ConsoleInputActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IWalkActions instance)
+        public void SetCallbacks(IConsoleInputActions instance)
         {
-            foreach (var item in m_Wrapper.m_WalkActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_ConsoleInputActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_WalkActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_ConsoleInputActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public WalkActions @walk => new WalkActions(this);
-    public interface IWalkActions
+    public ConsoleInputActions @ConsoleInput => new ConsoleInputActions(this);
+    public interface IConsoleInputActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
     }
 }
