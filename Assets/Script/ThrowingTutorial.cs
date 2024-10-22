@@ -28,11 +28,12 @@ public class ThrowingTutorial : MonoBehaviour
 	{
 		readyToThrow = true;
 		UpdateThrowCountDisplay();
+
 	}
 
-	private void Update()
+	public void Update()
 	{
-		if (Input.GetKeyDown(throwKey) && readyToThrow && totalThrows > 0)
+		if ((Input.GetKeyDown(throwKey) ||  Input.GetButtonDown("ButtonX")) && readyToThrow && totalThrows > 0)
 		{
 			Throw();
 		}

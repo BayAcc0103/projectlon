@@ -33,7 +33,7 @@ public class SwordSwing : MonoBehaviour
         while (elapsedTime < 1f)
         {
             float angle = Mathf.Lerp(0f, swingAngle, elapsedTime);
-            swordTransform.localEulerAngles = new Vector3(initialRotation.x + angle, initialRotation.y, initialRotation.z);
+            swordTransform.localEulerAngles = new Vector3(initialRotation.x , initialRotation.y + angle, initialRotation.z);
             elapsedTime += Time.deltaTime * swingSpeed;
             yield return null;
         }
@@ -44,7 +44,7 @@ public class SwordSwing : MonoBehaviour
         while (elapsedTime < 1f)
         {
             float angle = Mathf.Lerp(swingAngle, 0f, elapsedTime);
-            swordTransform.localEulerAngles = new Vector3(initialRotation.x + angle, initialRotation.y, initialRotation.z);
+            swordTransform.localEulerAngles = new Vector3(initialRotation.x , initialRotation.y + angle, initialRotation.z);
             elapsedTime += Time.deltaTime * swingSpeed;
             yield return null;
         }

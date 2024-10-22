@@ -1,0 +1,11 @@
+Model Information:
+* title:	Palworld Flopie
+* source:	https://sketchfab.com/3d-models/palworld-flopie-64a8f00ab8ac420d81907ffd3c5470c7
+* author:	Jakermates (https://sketchfab.com/jaydidleedoo)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Palworld Flopie" (https://sketchfab.com/3d-models/palworld-flopie-64a8f00ab8ac420d81907ffd3c5470c7) by Jakermates (https://sketchfab.com/jaydidleedoo) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
