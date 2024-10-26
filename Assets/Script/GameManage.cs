@@ -3,7 +3,9 @@ using TMPro;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
-{
+{	
+	[SerializeField] GameObject Enemy;
+	
 	// Countdown timer fields
 	public TMP_Text timerText; // Assign this in the inspector
 	public TMP_Text loseText;
@@ -76,6 +78,7 @@ public class GameManager : MonoBehaviour
 		if (isWin)
 		{
 			ShowWinnerText();
+			Destroy(Enemy);
 			Time.timeScale = 0;
 		}
 		else
@@ -126,7 +129,7 @@ public class GameManager : MonoBehaviour
 	private IEnumerator ResetAfterDelay()
 	{	
 		Debug.Log("Reseting");
-		yield return new WaitForSeconds(5f); // Delay of 5 seconds
+		yield return new WaitForSecondsRealtime(5f); // Delay of 5 seconds
 
 		ResetGame();
 	}
