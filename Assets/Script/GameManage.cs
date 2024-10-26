@@ -3,40 +3,49 @@ using TMPro;
 using System.Collections;
 
 public class GameManager : MonoBehaviour
-{	
-	[SerializeField] GameObject Enemy;
-	
+{
+	[Header(("Game Setting: GUI"))]
 	// Countdown timer fields
 	public TMP_Text timerText; // Assign this in the inspector
 	public TMP_Text loseText;
 	public TMP_Text winnerText; // Reference to TMP Text to show "Winner" message
 	public TMP_Text terroristText;
 	public TMP_Text counterTerroristText;
-	public float timeRemaining = 300; // Countdown timer duration
-	public float timeReset = 300;
-	private bool isRunning = true;
 	public AudioSource audioSource; // Reference to the AudioSource component
 	public AudioClip loseSound; // Reference to the sound effect
 	public AudioClip winSound;
 
+	[Header(("Game Setting: Game Object"))]
 	// Game objects management
+	[SerializeField] GameObject Enemy;
 	public GameObject[] gameObjectsToManage; // Array of game objects to manage
 	private Vector3[] initialPositions; // Array to store initial positions
 
 	// Throwing tutorial fields
 	public ThrowingTutorial throwingTutorial;
-	public PlayerHealth playerHealth;
+	//public PlayerHealth playerHealth;
+	[Header(("Game Setting: Stat"))]
+	public float timeRemaining = 300; // Countdown timer duration
+	public float timeReset = 300;
+	private bool isRunning = true;
 	public int initialThrowCount = 90;
 	public float winnerTextDisplayTime = 5f; // Duration to show "Winner" message
 	public int healthCount = 100;
-
+	public bool isWin = false;
 	private bool gameEnded = false;
 	private int terroristsScore = 0; // Terrorists' score
 	private int counterTerroristsScore = 0; // Counter-Terrorists' score
+	private PlayerHealth playerHealth;
+	
+	
+	
+	//private ObjectDestroyer objectDestroyer;
+
 
 	private void Start()
 	{
-		
+		playerHealth = FindObjectOfType<PlayerHealth>();
+		//objectDestroyer = gameObject.GetComponent<ObjectDestroyer>();
 		// Store initial positions of game objects
 		initialPositions = new Vector3[gameObjectsToManage.Length];
 		for (int i = 0; i < gameObjectsToManage.Length; i++)
@@ -58,7 +67,8 @@ public class GameManager : MonoBehaviour
 			{
 				timeRemaining = 0;
 				isRunning = false;
-				EndGame(false); // Call EndGame with 'false' for a loss
+				isWin = false;
+				EndGame(); // Call EndGame with 'false' for a loss
 			}
 		}
 	}
@@ -70,21 +80,35 @@ public class GameManager : MonoBehaviour
 		timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 	}
 
-	// Unified method to end the game (win or lose)
-	public void EndGame(bool isWin)
+
+	/// game start -> process -> endgame |--> win --> isWin = true <-- playerHealth > 0
+	///									 |--> lose --> isWin = false <-- playerHealth <= 0
+
+	//method to end the game (win or lose)
+	public void EndGame()
 	{
+
 		if (gameEnded) return;
 
-		if (isWin)
+		Debug.Log("End game");
+		if (isWin = true && playerHealth.playerHealth > 0) //&& objectDestroyer.alive == false)
 		{
+			
+			Debug.Log("Is showing winner text");
 			ShowWinnerText();
+			Debug.Log("You win");
 			Destroy(Enemy);
 			Time.timeScale = 0;
+
 		}
 		else
-		{
+		{	
+			isWin = false;
+			Debug.Log("Is showing loser text");
 			ShowLoserText();
+			Debug.Log("You Lose");
 			Time.timeScale = 0;
+
 		}
 
 		// Call Reset after a delay
@@ -111,6 +135,7 @@ public class GameManager : MonoBehaviour
 	// Method to show WinnerText when an object is destroyed and reset after 5 seconds
 	public void ShowWinnerText()
 	{
+		Debug.Log("Winner text");
 		winnerText.gameObject.SetActive(true);
 		winnerText.text = "Counter Terrorists Win!";
 		if (audioSource != null && winSound != null && !audioSource.isPlaying)
@@ -127,9 +152,10 @@ public class GameManager : MonoBehaviour
 
 	// Common method to reset the game after a delay
 	private IEnumerator ResetAfterDelay()
-	{	
+	{
 		Debug.Log("Reseting");
 		yield return new WaitForSecondsRealtime(5f); // Delay of 5 seconds
+		Time.timeScale = 1;
 
 		ResetGame();
 	}
@@ -137,8 +163,9 @@ public class GameManager : MonoBehaviour
 	// Reset all after delay
 	public void ResetGame()
 	{
-		ResetTimer();
 
+		ResetTimer();
+		Debug.Log("Reset the game");
 		// Reset the state of managed game objects
 		for (int i = 0; i < gameObjectsToManage.Length; i++)
 		{
@@ -161,6 +188,7 @@ public class GameManager : MonoBehaviour
 
 	public void ResetTimer()
 	{
+		Debug.Log("Reset time");
 		timeRemaining = timeReset; // Reset to initial time
 		isRunning = true; // Restart the timer
 		timerText.gameObject.SetActive(true);

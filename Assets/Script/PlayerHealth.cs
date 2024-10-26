@@ -24,12 +24,18 @@ public class PlayerHealth : MonoBehaviour
 		playerHealth = Mathf.Max(playerHealth - dmg, 0); // Ensure health doesn't drop below 0
 		UpdateHealStatus();
 
+		HealthZero();
+	}
+	public void HealthZero()
+	{
 		if (playerHealth <= 0)
 		{
-			gameManager.EndGame(false);
+			//gameManager.EndGame(false);
+			gameManager.isWin = false;
+			gameManager.EndGame();
 		}
 	}
-
+	
 	private void UpdateHealStatus()
 	{
 		g_healthOfPlayer.text = $"{playerHealth}"; // Use string interpolation for cleaner code

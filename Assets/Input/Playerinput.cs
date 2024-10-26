@@ -62,6 +62,15 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look(VR)"",
+                    ""type"": ""Button"",
+                    ""id"": ""b476513c-1468-47bb-ad17-d466515e2270"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -108,6 +117,45 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9780eb4e-54b8-456d-90f7-f8b2ae3dc775"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look(VR)"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""HeadTracking"",
+            ""id"": ""6803632b-2ee1-4b57-8885-3e66a403c553"",
+            ""actions"": [
+                {
+                    ""name"": ""HeadSet"",
+                    ""type"": ""Value"",
+                    ""id"": ""6bdd87e9-1652-40ac-9767-129b00d2d6df"",
+                    ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""f71a57e4-7063-42be-8364-95db150c16be"",
+                    ""path"": ""<XRHMD>/deviceRotation"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HeadSet"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -120,6 +168,10 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         m_ConsoleInput_Jump = m_ConsoleInput.FindAction("Jump", throwIfNotFound: true);
         m_ConsoleInput_Attack = m_ConsoleInput.FindAction("Attack", throwIfNotFound: true);
         m_ConsoleInput_Look = m_ConsoleInput.FindAction("Look", throwIfNotFound: true);
+        m_ConsoleInput_LookVR = m_ConsoleInput.FindAction("Look(VR)", throwIfNotFound: true);
+        // HeadTracking
+        m_HeadTracking = asset.FindActionMap("HeadTracking", throwIfNotFound: true);
+        m_HeadTracking_HeadSet = m_HeadTracking.FindAction("HeadSet", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,6 +237,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
     private readonly InputAction m_ConsoleInput_Jump;
     private readonly InputAction m_ConsoleInput_Attack;
     private readonly InputAction m_ConsoleInput_Look;
+    private readonly InputAction m_ConsoleInput_LookVR;
     public struct ConsoleInputActions
     {
         private @Playerinput m_Wrapper;
@@ -193,6 +246,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_ConsoleInput_Jump;
         public InputAction @Attack => m_Wrapper.m_ConsoleInput_Attack;
         public InputAction @Look => m_Wrapper.m_ConsoleInput_Look;
+        public InputAction @LookVR => m_Wrapper.m_ConsoleInput_LookVR;
         public InputActionMap Get() { return m_Wrapper.m_ConsoleInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -214,6 +268,9 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @LookVR.started += instance.OnLookVR;
+            @LookVR.performed += instance.OnLookVR;
+            @LookVR.canceled += instance.OnLookVR;
         }
 
         private void UnregisterCallbacks(IConsoleInputActions instance)
@@ -230,6 +287,9 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @LookVR.started -= instance.OnLookVR;
+            @LookVR.performed -= instance.OnLookVR;
+            @LookVR.canceled -= instance.OnLookVR;
         }
 
         public void RemoveCallbacks(IConsoleInputActions instance)
@@ -247,11 +307,62 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         }
     }
     public ConsoleInputActions @ConsoleInput => new ConsoleInputActions(this);
+
+    // HeadTracking
+    private readonly InputActionMap m_HeadTracking;
+    private List<IHeadTrackingActions> m_HeadTrackingActionsCallbackInterfaces = new List<IHeadTrackingActions>();
+    private readonly InputAction m_HeadTracking_HeadSet;
+    public struct HeadTrackingActions
+    {
+        private @Playerinput m_Wrapper;
+        public HeadTrackingActions(@Playerinput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @HeadSet => m_Wrapper.m_HeadTracking_HeadSet;
+        public InputActionMap Get() { return m_Wrapper.m_HeadTracking; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HeadTrackingActions set) { return set.Get(); }
+        public void AddCallbacks(IHeadTrackingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_HeadTrackingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_HeadTrackingActionsCallbackInterfaces.Add(instance);
+            @HeadSet.started += instance.OnHeadSet;
+            @HeadSet.performed += instance.OnHeadSet;
+            @HeadSet.canceled += instance.OnHeadSet;
+        }
+
+        private void UnregisterCallbacks(IHeadTrackingActions instance)
+        {
+            @HeadSet.started -= instance.OnHeadSet;
+            @HeadSet.performed -= instance.OnHeadSet;
+            @HeadSet.canceled -= instance.OnHeadSet;
+        }
+
+        public void RemoveCallbacks(IHeadTrackingActions instance)
+        {
+            if (m_Wrapper.m_HeadTrackingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IHeadTrackingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_HeadTrackingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_HeadTrackingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public HeadTrackingActions @HeadTracking => new HeadTrackingActions(this);
     public interface IConsoleInputActions
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnLookVR(InputAction.CallbackContext context);
+    }
+    public interface IHeadTrackingActions
+    {
+        void OnHeadSet(InputAction.CallbackContext context);
     }
 }
