@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Look(VR)",
+                    "type": "Button",
+                    "id": "b476513c-1468-47bb-ad17-d466515e2270",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -84,6 +93,45 @@
                     "processors": "",
                     "groups": "",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9780eb4e-54b8-456d-90f7-f8b2ae3dc775",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look(VR)",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "HeadTracking",
+            "id": "6803632b-2ee1-4b57-8885-3e66a403c553",
+            "actions": [
+                {
+                    "name": "HeadSet",
+                    "type": "Value",
+                    "id": "6bdd87e9-1652-40ac-9767-129b00d2d6df",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f71a57e4-7063-42be-8364-95db150c16be",
+                    "path": "<XRHMD>/deviceRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeadSet",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

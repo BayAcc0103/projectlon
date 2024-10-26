@@ -11,6 +11,13 @@ public class ObjectDestroyer : MonoBehaviour
 	public float requiredHoldTime = 5f; // Thời gian yêu cầu để hủy đối tượng
 	public GameManager gameManager; // Tham chiếu đến GameManager để xử lý game
 	public TMP_Text holdTimeText; // Tham chiếu đến Text hiển thị thời gian giữ
+	public bool alive = true;
+	
+	
+	private void Start()
+	{
+		gameManager = FindObjectOfType<GameManager>();
+	}
 
 	public void Update()
 	{   
@@ -35,6 +42,7 @@ public class ObjectDestroyer : MonoBehaviour
 				if (holdTime >= requiredHoldTime)
 				{
 					DisableObject(); // Hủy đối tượng
+					
 				}
 			}
 			else
@@ -50,10 +58,14 @@ public class ObjectDestroyer : MonoBehaviour
 	}
 
 	private void DisableObject()
-	{
+	{	
+		alive = false;
 		objectToDestroy.SetActive(false); // Tắt đối tượng
 		holdTimeText.text = "";
+		
 		// Gọi GameManager để hiển thị thông báo "Winner"
-		gameManager.ShowWinnerText();
+		//gameManager.EndGame(true);
+		gameManager.isWin = true;
+		gameManager.EndGame();
 	}
 }
