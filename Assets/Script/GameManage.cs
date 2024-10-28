@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour
 	[SerializeField] GameObject Enemy;
 	public GameObject[] gameObjectsToManage; // Array of game objects to manage
 	private Vector3[] initialPositions; // Array to store initial positions
+	//private SpawnEnemy spawnEnemy;
+	//[SerializeField] GameObject EnemySpawn;
+	[SerializeField] GameObject SpawnPoint;
 
 	// Throwing tutorial fields
 	public ThrowingTutorial throwingTutorial;
@@ -27,15 +30,18 @@ public class GameManager : MonoBehaviour
 	[Header(("Game Setting: Stat"))]
 	public float timeRemaining = 300; // Countdown timer duration
 	public float timeReset = 300;
+	//public float timeToReset = 5f;
 	private bool isRunning = true;
 	public int initialThrowCount = 90;
 	public float winnerTextDisplayTime = 5f; // Duration to show "Winner" message
 	public int healthCount = 100;
+	public float enemyHealthReset = 100f;
 	public bool isWin = false;
 	private bool gameEnded = false;
 	private int terroristsScore = 0; // Terrorists' score
 	private int counterTerroristsScore = 0; // Counter-Terrorists' score
 	private PlayerHealth playerHealth;
+	private EnemyAI enemyAI;
 	
 	
 	
@@ -43,7 +49,8 @@ public class GameManager : MonoBehaviour
 
 
 	private void Start()
-	{
+	{	
+		enemyAI = FindObjectOfType<EnemyAI>();
 		playerHealth = FindObjectOfType<PlayerHealth>();
 		//objectDestroyer = gameObject.GetComponent<ObjectDestroyer>();
 		// Store initial positions of game objects
@@ -97,7 +104,7 @@ public class GameManager : MonoBehaviour
 			Debug.Log("Is showing winner text");
 			ShowWinnerText();
 			Debug.Log("You win");
-			Destroy(Enemy);
+			Enemy.SetActive(false);
 			Time.timeScale = 0;
 
 		}
@@ -152,9 +159,10 @@ public class GameManager : MonoBehaviour
 
 	// Common method to reset the game after a delay
 	private IEnumerator ResetAfterDelay()
-	{
-		Debug.Log("Reseting");
+	{	
+		Debug.Log("Is Reseting");
 		yield return new WaitForSecondsRealtime(5f); // Delay of 5 seconds
+		
 		Time.timeScale = 1;
 
 		ResetGame();
@@ -177,6 +185,21 @@ public class GameManager : MonoBehaviour
 		// Reset throw count
 		throwingTutorial.ResetThrowCount(initialThrowCount);
 		playerHealth.UpdateCurrentHealth(healthCount);
+		
+		if (Enemy != null && SpawnPoint != null)
+		{
+			Enemy.SetActive(false); // Temporarily disable to reset position
+			Enemy.transform.position = SpawnPoint.transform.position;
+			
+			Enemy.SetActive(true);  // Reactivate enemy
+		}	
+		
+		if (enemyAI != null)
+		{	
+			Debug.Log("Reset enemy health");
+			enemyAI.ResetEnemyHealth(enemyHealthReset); // Reset enemy health
+		}
+		
 
 		// Hide texts after resetting
 		winnerText.gameObject.SetActive(false);

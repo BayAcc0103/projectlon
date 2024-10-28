@@ -151,12 +151,16 @@ public class EnemyAI : MonoBehaviour
 	{
 		health -= damage;
 
-		if (health <= 0) Invoke(nameof(DestroyEnemy), 0.5f);
+		if (health <= 0)
+		{
+			health = 0; // Clamp health to zero
+			Invoke(nameof(DestroyEnemy), 0.5f);
+		}
 	}
 
 	private void DestroyEnemy()
 	{
-		Destroy(gameObject);
+		gameObject.SetActive(false);
 	}
 
 	private void OnDrawGizmosSelected()
@@ -167,5 +171,10 @@ public class EnemyAI : MonoBehaviour
 		Gizmos.DrawWireSphere(transform.position, meleeAttackRange);
 		Gizmos.color = Color.yellow;
 		Gizmos.DrawWireSphere(transform.position, sightRange);
+	}
+	
+	public void ResetEnemyHealth(float resetHealth)
+	{
+		health = resetHealth;
 	}
 }
