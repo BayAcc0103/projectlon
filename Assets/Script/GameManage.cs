@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -22,7 +23,8 @@ public class GameManager : MonoBehaviour
 	private Vector3[] initialPositions; // Array to store initial positions
 	//private SpawnEnemy spawnEnemy;
 	//[SerializeField] GameObject EnemySpawn;
-	[SerializeField] GameObject SpawnPoint;
+	[SerializeField] List<GameObject> spawnPoints; // List of spawn points
+
 
 	// Throwing tutorial fields
 	public ThrowingTutorial throwingTutorial;
@@ -185,16 +187,18 @@ public class GameManager : MonoBehaviour
 		// Reset throw count
 		throwingTutorial.ResetThrowCount(initialThrowCount);
 		playerHealth.UpdateCurrentHealth(healthCount);
-		
-		if (Enemy != null && SpawnPoint != null)
-		{
-			Enemy.SetActive(false); // Temporarily disable to reset position
-			Enemy.transform.position = SpawnPoint.transform.position;
-			
-			Enemy.SetActive(true);  // Reactivate enemy
-		}	
-		
-		if (enemyAI != null)
+
+        foreach (var enemyObj in gameObjectsToManage)
+        {
+            if (enemyObj.layer == LayerMask.NameToLayer("Enemy") && spawnPoints.Count > 0)
+            {
+                int spawnIndex = Random.Range(0, spawnPoints.Count);
+                enemyObj.transform.position = spawnPoints[spawnIndex].transform.position;
+                enemyObj.SetActive(true);
+            }
+        }
+
+        if (enemyAI != null)
 		{	
 			Debug.Log("Reset enemy health");
 			enemyAI.ResetEnemyHealth(enemyHealthReset); // Reset enemy health
