@@ -24,10 +24,11 @@ public class GameManager : MonoBehaviour
 	//private SpawnEnemy spawnEnemy;
 	//[SerializeField] GameObject EnemySpawn;
 	[SerializeField] List<GameObject> spawnPoints; // List of spawn points
+    private Vector3[] spawnInitialPositions;
 
 
-	// Throwing tutorial fields
-	public ThrowingTutorial throwingTutorial;
+    // Throwing tutorial fields
+    public ThrowingTutorial throwingTutorial;
 	//public PlayerHealth playerHealth;
 	[Header(("Game Setting: Stat"))]
 	public float timeRemaining = 300; // Countdown timer duration
@@ -61,7 +62,13 @@ public class GameManager : MonoBehaviour
 		{
 			initialPositions[i] = gameObjectsToManage[i].transform.position;
 		}
-	}
+
+        spawnInitialPositions = new Vector3[spawnPoints.Count];
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            spawnInitialPositions[i] = spawnPoints[i].transform.position;
+        }
+    }
 
 	private void Update()
 	{
@@ -184,19 +191,26 @@ public class GameManager : MonoBehaviour
 			gameObjectsToManage[i].SetActive(true); // Reactivate objects
 		}
 
-		// Reset throw count
-		throwingTutorial.ResetThrowCount(initialThrowCount);
+        for (int i = 0; i < spawnPoints.Count; i++)
+        {
+            spawnPoints[i].SetActive(false);
+            spawnPoints[i].transform.position = spawnInitialPositions[i];
+            spawnPoints[i].SetActive(true);
+        }
+
+        // Reset throw count
+        throwingTutorial.ResetThrowCount(initialThrowCount);
 		playerHealth.UpdateCurrentHealth(healthCount);
 
-        foreach (var enemyObj in gameObjectsToManage)
-        {
-            if (enemyObj.layer == LayerMask.NameToLayer("Enemy") && spawnPoints.Count > 0)
-            {
-                int spawnIndex = Random.Range(0, spawnPoints.Count);
-                enemyObj.transform.position = spawnPoints[spawnIndex].transform.position;
-                enemyObj.SetActive(true);
-            }
-        }
+        //foreach (var enemyObj in spawnPoints)
+        //{
+        //    if (enemyObj.layer == LayerMask.NameToLayer("Enemy") && spawnPoints.Count > 0)
+        //    {
+        //        int spawnIndex = Random.Range(0, spawnPoints.Count);
+        //        enemyObj.transform.position = spawnPoints[spawnIndex].transform.position;
+        //        enemyObj.SetActive(true);
+        //    }
+        //}
 
         if (enemyAI != null)
 		{	
