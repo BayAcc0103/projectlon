@@ -79,8 +79,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
 			Invoke(nameof(ResetJump), jumpCooldown);
 		}
-
-
 	}
 
 	public void MovePlayer()
@@ -111,9 +109,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
 	public void Jump()
 	{
-
-
-
 		// reset y velocity
 		rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
