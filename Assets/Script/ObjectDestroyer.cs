@@ -11,20 +11,15 @@ public class ObjectDestroyer : MonoBehaviour
 	public float requiredHoldTime = 5f; // Thời gian yêu cầu để hủy đối tượng
 	public GameManager gameManager; // Tham chiếu đến GameManager để xử lý game
 	public TMP_Text holdTimeText; // Tham chiếu đến Text hiển thị thời gian giữ
-	public bool alive = true;
-	
-	
+	public bool alive = true;	
 	private void Start()
 	{
 		gameManager = FindObjectOfType<GameManager>();
 	}
 
 	public void Update()
-	{   
-		
+	{   	
 		float distanceToObject = Vector3.Distance(player.position, objectToDestroy.transform.position);
-		
-
 		// Nếu người chơi ở trong khoảng cách yêu cầu
 		if (distanceToObject <= activationDistance)
 		{	
@@ -34,15 +29,12 @@ public class ObjectDestroyer : MonoBehaviour
 			if (isKeyDown)
 			{
 				holdTime += Time.deltaTime; // Tăng thời gian giữ theo thời gian thực
-
 				// Cập nhật hiển thị thời gian giữ
 				holdTimeText.text = "" + Mathf.Ceil(requiredHoldTime - holdTime).ToString() + "s";
-
 				// Nếu người chơi giữ phím E đủ thời gian
 				if (holdTime >= requiredHoldTime)
 				{
-					DisableObject(); // Hủy đối tượng
-					
+					DisableObject(); // Hủy đối tượng			
 				}
 			}
 			else
@@ -62,7 +54,6 @@ public class ObjectDestroyer : MonoBehaviour
 		alive = false;
 		objectToDestroy.SetActive(false); // Tắt đối tượng
 		holdTimeText.text = "";
-		
 		// Gọi GameManager để hiển thị thông báo "Winner"
 		//gameManager.EndGame(true);
 		gameManager.isWin = true;
