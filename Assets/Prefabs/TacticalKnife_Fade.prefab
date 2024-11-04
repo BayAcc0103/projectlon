@@ -4842,8 +4842,8 @@ GameObject:
   - component: {fileID: 8468296950219646718}
   - component: {fileID: 1258945232595571793}
   - component: {fileID: 767288912903194831}
-  - component: {fileID: 2412894696674377683}
   - component: {fileID: 7969779228778372183}
+  - component: {fileID: 2412894696674377683}
   - component: {fileID: -3999848353407040999}
   - component: {fileID: -7079198370790033568}
   m_Layer: 0
@@ -4946,19 +4946,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2412894696674377683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8656655253640310803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84f0a1da5194af1468f49c2f1663065c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 20
 --- !u!65 &7969779228778372183
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4980,6 +4967,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.030633744, y: 0.072105795, z: 0.44312394}
   m_Center: {x: -0.00000015785918, y: 0.00038690306, z: 0.22158408}
+--- !u!114 &2412894696674377683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8656655253640310803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f0a1da5194af1468f49c2f1663065c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
 --- !u!96 &-3999848353407040999
 TrailRenderer:
   serializedVersion: 3
