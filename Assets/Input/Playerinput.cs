@@ -62,15 +62,6 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Look(VR)"",
-                    ""type"": ""Button"",
-                    ""id"": ""b476513c-1468-47bb-ad17-d466515e2270"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -117,17 +108,6 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""9780eb4e-54b8-456d-90f7-f8b2ae3dc775"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Look(VR)"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -168,7 +148,6 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         m_ConsoleInput_Jump = m_ConsoleInput.FindAction("Jump", throwIfNotFound: true);
         m_ConsoleInput_Attack = m_ConsoleInput.FindAction("Attack", throwIfNotFound: true);
         m_ConsoleInput_Look = m_ConsoleInput.FindAction("Look", throwIfNotFound: true);
-        m_ConsoleInput_LookVR = m_ConsoleInput.FindAction("Look(VR)", throwIfNotFound: true);
         // HeadTracking
         m_HeadTracking = asset.FindActionMap("HeadTracking", throwIfNotFound: true);
         m_HeadTracking_HeadSet = m_HeadTracking.FindAction("HeadSet", throwIfNotFound: true);
@@ -237,7 +216,6 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
     private readonly InputAction m_ConsoleInput_Jump;
     private readonly InputAction m_ConsoleInput_Attack;
     private readonly InputAction m_ConsoleInput_Look;
-    private readonly InputAction m_ConsoleInput_LookVR;
     public struct ConsoleInputActions
     {
         private @Playerinput m_Wrapper;
@@ -246,7 +224,6 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_ConsoleInput_Jump;
         public InputAction @Attack => m_Wrapper.m_ConsoleInput_Attack;
         public InputAction @Look => m_Wrapper.m_ConsoleInput_Look;
-        public InputAction @LookVR => m_Wrapper.m_ConsoleInput_LookVR;
         public InputActionMap Get() { return m_Wrapper.m_ConsoleInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -268,9 +245,6 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @LookVR.started += instance.OnLookVR;
-            @LookVR.performed += instance.OnLookVR;
-            @LookVR.canceled += instance.OnLookVR;
         }
 
         private void UnregisterCallbacks(IConsoleInputActions instance)
@@ -287,9 +261,6 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @LookVR.started -= instance.OnLookVR;
-            @LookVR.performed -= instance.OnLookVR;
-            @LookVR.canceled -= instance.OnLookVR;
         }
 
         public void RemoveCallbacks(IConsoleInputActions instance)
@@ -359,7 +330,6 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnLookVR(InputAction.CallbackContext context);
     }
     public interface IHeadTrackingActions
     {

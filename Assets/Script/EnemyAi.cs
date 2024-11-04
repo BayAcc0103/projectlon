@@ -24,7 +24,6 @@ public class EnemyAI : MonoBehaviour
 	public int meleeDamage = 0;
 	public GameObject projectile;
 
-
 	PlayerHealth playerHealth;
 
 	// States
@@ -79,7 +78,8 @@ public class EnemyAI : MonoBehaviour
 		float randomZ = Random.Range(-walkPointRange, walkPointRange);
 		float randomX = Random.Range(-walkPointRange, walkPointRange);
 
-		walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
+		walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z
+		+ randomZ);
 
 		if (Physics.Raycast(walkPoint, -transform.up, 2f, whatIsGround))
 			walkPointSet = true;
@@ -100,7 +100,8 @@ public class EnemyAI : MonoBehaviour
 		if (!alreadyAttacked)
 		{
 			// Ranged attack code here
-			Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+			Rigidbody rb = Instantiate(projectile, transform.position, 
+			Quaternion.identity).GetComponent<Rigidbody>();
 			rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
 			rb.AddForce(transform.up * 8f, ForceMode.Impulse);
 
@@ -138,10 +139,6 @@ public class EnemyAI : MonoBehaviour
 			Invoke(nameof(ResetAttack), timeBetweenAttacks);  // Set up the cooldown between attacks
 		}
 	}
-
-
-
-
 	private void ResetAttack()
 	{
 		alreadyAttacked = false;

@@ -8818,8 +8818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fe6218dc676e93469e0210abfdb6098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensX: 80
-  sensY: 80
+  sensX: 120
+  sensY: 120
   cam: {fileID: 867374994}
   orientation: {fileID: 2144773150}
 --- !u!54 &477515611
@@ -9116,10 +9116,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: aec40da5-833d-4af0-84b8-47a2558e510c
     m_ActionName: ConsoleInput/Look
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b476513c-1468-47bb-ad17-d466515e2270
-    m_ActionName: ConsoleInput/Look(VR)
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 6bdd87e9-1652-40ac-9767-129b00d2d6df
@@ -21342,7 +21338,7 @@ MonoBehaviour:
   - {fileID: 477515606}
   - {fileID: 867374992}
   - {fileID: 696179224}
-  SpawnPoint: {fileID: 666219069}
+  spawnPoints: []
   throwingTutorial: {fileID: 477515608}
   timeRemaining: 300
   timeReset: 300
@@ -23655,6 +23651,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f2412ecfd29a442b74a49e516be418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioSource: {fileID: 0}
+  doorSound: {fileID: 0}
 --- !u!4 &1336835746 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: e6742bcf1c6e53248b7eca542e7c70e6, type: 3}
@@ -25449,6 +25447,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f2412ecfd29a442b74a49e516be418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioSource: {fileID: 0}
+  doorSound: {fileID: 0}
 --- !u!1 &1477364775
 GameObject:
   m_ObjectHideFlags: 0
@@ -27783,6 +27783,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f2412ecfd29a442b74a49e516be418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioSource: {fileID: 0}
+  doorSound: {fileID: 0}
 --- !u!1 &1565189115 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100004, guid: eca90685bd7c0e14c985891ef5c0a3f3, type: 3}
@@ -27863,6 +27865,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57f2412ecfd29a442b74a49e516be418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _audioSource: {fileID: 0}
+  doorSound: {fileID: 0}
 --- !u!1001 &1566737701
 PrefabInstance:
   m_ObjectHideFlags: 0
