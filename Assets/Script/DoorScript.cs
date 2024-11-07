@@ -34,18 +34,7 @@ public class DoorScript : MonoBehaviour {
         }
     }
 
-    void OpenDoor()
-    {
-        _isOpen = true;
-        _animator.SetBool("open", true);
-        if (_audioSource != null && doorSound != null)
-        {
-            _audioSource.PlayOneShot(doorSound);
-        }
-
-
-    }
-
+    
     IEnumerator CloseDoorAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
