@@ -1,0 +1,74 @@
+{
+    "name": "Menu",
+    "maps": [
+        {
+            "name": "MenuButton",
+            "id": "697ba9c8-391b-42e4-8541-a371ba199b79",
+            "actions": [
+                {
+                    "name": "Start Button",
+                    "type": "Button",
+                    "id": "7e431f6d-7589-4ba8-9871-e4d5b8511505",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "End Button",
+                    "type": "Button",
+                    "id": "66f0dbd3-6dad-4a87-a6ef-737a6ee77fca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause Button",
+                    "type": "Button",
+                    "id": "657f67d5-1836-4615-ba39-3f31bddf439a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "59b9473a-1ee9-4013-ba39-c9067ea3f895",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Start Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "60da4ab3-4367-4dce-9f18-1f16bfa68438",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "End Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc4a217e-fec4-41c6-acca-b4996ef0bb3f",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -15,13 +15,13 @@ public class PlayerCam : MonoBehaviour
 	private float xRotation;
 	private float yRotation;
 
-	private InputDevice headset;
+	// private InputDevice headset;
 	
 	private void Start()
 	{
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
-		InitializeHeadset();
+		//InitializeHeadset();
 		
 		// Ensure cam and orientation are assigned
 		if (cam == null || orientation == null)
@@ -30,56 +30,57 @@ public class PlayerCam : MonoBehaviour
 		}
 	}
 
-	private void InitializeHeadset()
-	{
-		var headDevices = new List<InputDevice>();
-		InputDevices.GetDevicesAtXRNode(XRNode.Head, headDevices);
-		if (headDevices.Count > 0)
-		{
-			headset = headDevices[0];
+	// private void InitializeHeadset()
+	// {
+	// 	var headDevices = new List<InputDevice>();
+	// 	InputDevices.GetDevicesAtXRNode(XRNode.Head, headDevices);
+	// 	if (headDevices.Count > 0)
+	// 	{
+	// 		headset = headDevices[0];
 			
-			// Lấy hướng Y ban đầu của thiết bị để thiết lập yRotation
-			if (headset.TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion initialRotation))
-			{
-				yRotation = initialRotation.eulerAngles.y;
-			}
-		}
-		else
-		{
-			Debug.LogWarning("VR headset not found.");
-		}
-	}
+	// 		// Lấy hướng Y ban đầu của thiết bị để thiết lập yRotation
+	// 		if (headset.TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion initialRotation))
+	// 		{
+	// 			yRotation = initialRotation.eulerAngles.y;
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		Debug.LogWarning("VR headset not found.");
+	// 	}
+	// }
 
 
 	private void Update()
 	{
-		if (headset.isValid)
-		{
-			UpdateHeadsetRotation();
-		}
-		else
-		{
-			UpdateNonVRInput();
-		}
+		// if (headset.isValid)
+		// {
+		// 	UpdateHeadsetRotation();
+		// }
+		// else
+		// {
+		// 	UpdateNonVRInput();
+		// }
+		UpdateNonVRInput();
 	}
 
-	private void LateUpdate()
-	{
-		if (headset.isValid)
-		{
-			UpdateHeadsetRotation();
-		}
-	}
+	// private void LateUpdate()
+	// {
+	// 	if (headset.isValid)
+	// 	{
+	// 		UpdateHeadsetRotation();
+	// 	}
+	// }
 
 	
-	private void UpdateHeadsetRotation()
-	{
-		if (headset.TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion headsetRotation))
-		{
-			// Directly set the rotation without smoothing for VR
-			cam.localRotation = headsetRotation;
-		}
-	}
+	// private void UpdateHeadsetRotation()
+	// {
+	// 	if (headset.TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion headsetRotation))
+	// 	{
+	// 		// Directly set the rotation without smoothing for VR
+	// 		cam.localRotation = headsetRotation;
+	// 	}
+	// }
 
 	private void UpdateNonVRInput()
 	{

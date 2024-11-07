@@ -18,17 +18,17 @@ public class GameManager : MonoBehaviour
 
 	[Header(("Game Setting: Game Object"))]
 	// Game objects management
-	[SerializeField] GameObject Enemy;
+	[SerializeField] GameObject[] Enemy; // Array to store multiple enemy GameObjects
 	public GameObject[] gameObjectsToManage; // Array of game objects to manage
 	private Vector3[] initialPositions; // Array to store initial positions
 	//private SpawnEnemy spawnEnemy;
 	//[SerializeField] GameObject EnemySpawn;
 	[SerializeField] List<GameObject> spawnPoints; // List of spawn points
-    private Vector3[] spawnInitialPositions;
+	private Vector3[] spawnInitialPositions;
 
 
-    // Throwing tutorial fields
-    public ThrowingTutorial throwingTutorial;
+	// Throwing tutorial fields
+	public ThrowingTutorial throwingTutorial;
 	//public PlayerHealth playerHealth;
 	[Header(("Game Setting: Stat"))]
 	public float timeRemaining = 300; // Countdown timer duration
@@ -46,29 +46,23 @@ public class GameManager : MonoBehaviour
 	private PlayerHealth playerHealth;
 	private EnemyAI enemyAI;
 	
-	
-	
-	//private ObjectDestroyer objectDestroyer;
-
-
 	private void Start()
 	{	
-		enemyAI = FindObjectOfType<EnemyAI>();
+		//enemyAI = FindObjectOfType<EnemyAI>();
 		playerHealth = FindObjectOfType<PlayerHealth>();
-		//objectDestroyer = gameObject.GetComponent<ObjectDestroyer>();
-		// Store initial positions of game objects
 		initialPositions = new Vector3[gameObjectsToManage.Length];
 		for (int i = 0; i < gameObjectsToManage.Length; i++)
 		{
 			initialPositions[i] = gameObjectsToManage[i].transform.position;
 		}
 
-        spawnInitialPositions = new Vector3[spawnPoints.Count];
-        for (int i = 0; i < spawnPoints.Count; i++)
-        {
-            spawnInitialPositions[i] = spawnPoints[i].transform.position;
-        }
-    }
+		spawnInitialPositions = new Vector3[spawnPoints.Count];
+		for (int i = 0; i < spawnPoints.Count; i++)
+		{
+			spawnInitialPositions[i] = spawnPoints[i].transform.position;
+		}
+
+	}
 
 	private void Update()
 	{
@@ -80,13 +74,16 @@ public class GameManager : MonoBehaviour
 				UpdateTimerText();
 			}
 			else
-			{
+			{	
+				
 				timeRemaining = 0;
 				isRunning = false;
 				isWin = false;
 				EndGame(); // Call EndGame with 'false' for a loss
 			}
 		}
+		
+		EndGameSt();
 	}
 
 	void UpdateTimerText()
@@ -113,7 +110,7 @@ public class GameManager : MonoBehaviour
 			Debug.Log("Is showing winner text");
 			ShowWinnerText();
 			Debug.Log("You win");
-			Enemy.SetActive(false);
+			
 			Time.timeScale = 0;
 
 		}
@@ -123,6 +120,7 @@ public class GameManager : MonoBehaviour
 			Debug.Log("Is showing loser text");
 			ShowLoserText();
 			Debug.Log("You Lose");
+		
 			Time.timeScale = 0;
 
 		}
@@ -161,7 +159,7 @@ public class GameManager : MonoBehaviour
 
 		// Mark game as ended
 		gameEnded = true;
-
+		
 		counterTerroristsScore++;
 		counterTerroristText.text = "Counter-Terrorist  " + counterTerroristsScore;
 	}
@@ -191,40 +189,40 @@ public class GameManager : MonoBehaviour
 			gameObjectsToManage[i].SetActive(true); // Reactivate objects
 		}
 
-        for (int i = 0; i < spawnPoints.Count; i++)
-        {
-            spawnPoints[i].SetActive(false);
-            spawnPoints[i].transform.position = spawnInitialPositions[i];
-            spawnPoints[i].SetActive(true);
-        }
-
-        // Reset throw count
-        throwingTutorial.ResetThrowCount(initialThrowCount);
-		playerHealth.UpdateCurrentHealth(healthCount);
-
-        //foreach (var enemyObj in spawnPoints)
-        //{
-        //    if (enemyObj.layer == LayerMask.NameToLayer("Enemy") && spawnPoints.Count > 0)
-        //    {
-        //        int spawnIndex = Random.Range(0, spawnPoints.Count);
-        //        enemyObj.transform.position = spawnPoints[spawnIndex].transform.position;
-        //        enemyObj.SetActive(true);
-        //    }
-        //}
-
-        if (enemyAI != null)
-		{	
-			Debug.Log("Reset enemy health");
-			enemyAI.ResetEnemyHealth(enemyHealthReset); // Reset enemy health
+		for (int i = 0; i < spawnPoints.Count; i++)
+		{
+			spawnPoints[i].SetActive(false);
+			spawnPoints[i].transform.position = spawnInitialPositions[i];
+			spawnPoints[i].SetActive(true);
 		}
-		
 
+		// Reset throw count
+		throwingTutorial.ResetThrowCount(initialThrowCount);
+		playerHealth.UpdateCurrentHealth(healthCount);
+		ResetEnemies();
 		// Hide texts after resetting
 		winnerText.gameObject.SetActive(false);
+		
 		loseText.text = "";
-
 		// Mark game as not ended
 		gameEnded = false;
+	}
+
+	// GameManager.cs
+
+	private void ResetEnemies()
+	{
+		for (int i = 0; i < Enemy.Length; i++)
+		{
+			Enemy[i].SetActive(false); // Deactivate enemy
+			EnemyAI enemyAIComponent = Enemy[i].GetComponent<EnemyAI>();
+			if (enemyAIComponent != null)
+			{
+				enemyAIComponent.ResetEnemyHealth(enemyHealthReset);
+			}
+			Enemy[i].transform.position = spawnInitialPositions[i]; // Reset position
+			Enemy[i].SetActive(true); // Reactivate enemy
+		}
 	}
 
 	public void ResetTimer()
@@ -235,5 +233,35 @@ public class GameManager : MonoBehaviour
 		timerText.gameObject.SetActive(true);
 		loseText.text = "";
 		UpdateTimerText(); // Update the display
+	}
+	
+	public void EndGameSt()
+	{
+		if (gameEnded) return; // Exit if game already ended
+
+		if (counterTerroristsScore >= 5)
+		{
+			// Counter-Terrorists Win
+			winnerText.gameObject.SetActive(true);
+			winnerText.text = "Counter Terrorists Win!";
+			if (audioSource != null && winSound != null && !audioSource.isPlaying)
+			{
+				audioSource.PlayOneShot(winSound);
+			}
+			Time.timeScale = 0; // Pause the game
+			gameEnded = true; // Mark the game as ended
+		}
+		else if (terroristsScore >= 5)
+		{
+			// Terrorists Win
+			loseText.text = "Terrorists Win!";
+			if (audioSource != null && loseSound != null && !audioSource.isPlaying)
+			{
+				audioSource.PlayOneShot(loseSound);
+			}
+			timerText.gameObject.SetActive(false); // Hide timer text
+			Time.timeScale = 0; // Pause the game
+			gameEnded = true; // Mark the game as ended
+		}
 	}
 }

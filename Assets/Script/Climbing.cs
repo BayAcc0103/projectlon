@@ -32,7 +32,7 @@ public class Climbing : MonoBehaviour
 
     private void Start(){}
 
-    private void Update()
+    public void Update()
     {
         WallCheck();
         StateMachine();
@@ -40,10 +40,10 @@ public class Climbing : MonoBehaviour
         if (climbing) ClimbingMovement();
     }
 
-    private void StateMachine()
+    public void StateMachine()
     {
         // State 0 - Ledge Grabbing
-        if (wallFront && Input.GetKey(KeyCode.W) && wallLookAngle < maxWallLookAngle)
+        if (wallFront && (Input.GetKey(KeyCode.W)||Input.GetButtonDown("ButtonA")) && wallLookAngle < maxWallLookAngle)
         {
             if (!climbing && climbTimer > 0) StartClimbing();
 
