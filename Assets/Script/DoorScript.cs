@@ -46,5 +46,10 @@ public class DoorScript : MonoBehaviour {
 
     }
 
-    
+    IEnumerator CloseDoorAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        _isOpen = false;
+        _animator.SetBool("open", false);
+    }
 }
