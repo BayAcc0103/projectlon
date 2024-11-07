@@ -49,14 +49,5 @@ public class ObjectDestroyer : MonoBehaviour
 		}
 	}
 
-	private void DisableObject()
-	{	
-		alive = false;
-		objectToDestroy.SetActive(false); // Tắt đối tượng
-		holdTimeText.text = "";
-		// Gọi GameManager để hiển thị thông báo "Winner"
-		//gameManager.EndGame(true);
-		gameManager.isWin = true;
-		gameManager.EndGame();
-	}
+	
 }
