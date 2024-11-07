@@ -9,30 +9,7 @@ public class DoorScript : MonoBehaviour {
     public AudioClip doorSound; // Reference to the sound effect
 
 
-    void Start()
-    {
-        _animator = GetComponent<Animator>();
-        _audioSource = GetComponent<AudioSource>();
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            if (!_isOpen)
-            {
-                OpenDoor();
-            }
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            StartCoroutine(CloseDoorAfterDelay(3f)); // Đặt thời gian đóng cửa
-        }
-    }
+    
 
     void OpenDoor()
     {
