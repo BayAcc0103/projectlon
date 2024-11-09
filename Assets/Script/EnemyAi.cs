@@ -23,13 +23,16 @@ public class EnemyAI : MonoBehaviour
 	bool alreadyAttacked;
 	public int meleeDamage = 0;
 	public GameObject projectile;
-
+	bool takeDmg = false;
 	PlayerHealth playerHealth;
 
 	// States
 	public float sightRange, attackRange, meleeAttackRange;
-	public bool playerInSightRange, playerInAttackRange, playerInMeleeAttackRange;
+	public bool playerInSightRange,playerInSightRange2, playerInAttackRange, playerInMeleeAttackRange;
 
+	public Vector3 sightRangeBox = new Vector3(6, 6, 6);
+	public Vector3 mutil1 = new Vector3(-1, -1,-1);
+	
 	private void Awake()
 	{
 		player = GameObject.Find("Player")?.transform;
@@ -45,17 +48,18 @@ public class EnemyAI : MonoBehaviour
 		}
 	}
 
-	private void FixedUpdate()
+	public void FixedUpdate()
 	{
 		// Check for sight, attack, and melee range
-		playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+		//playerInSightRange = Physics.CheckSphere(transform.position, sightRange, whatIsPlayer);
+		playerInSightRange2 = Physics.CheckBox(transform.position, sightRangeBox, Quaternion.identity, whatIsPlayer);
 		playerInAttackRange = Physics.CheckSphere(transform.position, attackRange, whatIsPlayer);
 		playerInMeleeAttackRange = Physics.CheckSphere(transform.position, meleeAttackRange, whatIsPlayer);
 
-		if (!playerInSightRange && !playerInAttackRange) Patroling();
-		if (playerInMeleeAttackRange && playerInSightRange) MeleeAttackPlayer(); // Prioritize melee attack
-		else if (playerInAttackRange && playerInSightRange) AttackPlayer();     // Then ranged attack
-		else if (playerInSightRange) ChasePlayer();
+		if (!playerInSightRange2 && !playerInAttackRange) Patroling();
+		if (playerInMeleeAttackRange && playerInSightRange2) MeleeAttackPlayer(); // Prioritize melee attack
+		else if (playerInAttackRange && playerInSightRange2) AttackPlayer();     // Then ranged attack
+		else if (playerInSightRange2) ChasePlayer();
 	}
 
 	private void Patroling()
@@ -147,7 +151,15 @@ public class EnemyAI : MonoBehaviour
 	public void TakeDamage(int damage)
 	{
 		health -= damage;
-
+		takeDmg = true;
+		
+		if(takeDmg == true)
+		{	
+			transform.LookAt(player);
+			sightRangeBox+=new Vector3(10,10,0);
+			attackRange+=5;
+		}
+		
 		if (health <= 0)
 		{
 			health = 0; // Clamp health to zero
@@ -166,12 +178,16 @@ public class EnemyAI : MonoBehaviour
 		Gizmos.DrawWireSphere(transform.position, attackRange);
 		Gizmos.color = Color.blue;
 		Gizmos.DrawWireSphere(transform.position, meleeAttackRange);
-		Gizmos.color = Color.yellow;
-		Gizmos.DrawWireSphere(transform.position, sightRange);
+		// Gizmos.color = Color.yellow;
+		// Gizmos.DrawWireSphere(transform.position, sightRange);
+		Gizmos.color = Color.green;
+		Gizmos.DrawWireCube(transform.position+mutil1,sightRangeBox);
 	}
 	
-	public void ResetEnemyHealth(float resetHealth)
+	public void ResetEnemyHealth(float resetHealth,Vector3 resetSightRange,float resetattackRange)
 	{
 		health = resetHealth;
+		sightRangeBox = resetSightRange;
+		attackRange = resetattackRange;
 	}
 }

@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Save",
+                    "type": "Button",
+                    "id": "7ed862bb-b2f1-4b72-8acb-73425f12c9ea",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -77,7 +86,7 @@
                 {
                     "name": "",
                     "id": "91f8a168-74e8-47c6-8107-f00216bfd675",
-                    "path": "<XInputController>/buttonWest",
+                    "path": "<XInputController>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -98,8 +107,8 @@
                 },
                 {
                     "name": "",
-                    "id": "8825f215-5bb2-4302-af56-21e0f470d5f9",
-                    "path": "",
+                    "id": "d391bcd7-6471-410a-b42a-9ef2b7aec12d",
+                    "path": "<XInputController>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -109,12 +118,12 @@
                 },
                 {
                     "name": "",
-                    "id": "d391bcd7-6471-410a-b42a-9ef2b7aec12d",
-                    "path": "<XInputController>/buttonSouth",
+                    "id": "0715e818-3760-4a73-9e7e-d8c3cb19efa4",
+                    "path": "<XInputController>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Climb",
+                    "action": "Save",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

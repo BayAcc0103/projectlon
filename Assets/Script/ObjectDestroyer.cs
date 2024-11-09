@@ -23,8 +23,7 @@ public class ObjectDestroyer : MonoBehaviour
 		// Nếu người chơi ở trong khoảng cách yêu cầu
 		if (distanceToObject <= activationDistance)
 		{	
-			float triggerInput = Input.GetAxis("RightTrigger");
-			bool isKeyDown = Input.GetKey(KeyCode.E) || triggerInput > 0.1f;
+			bool isKeyDown = Input.GetKey(KeyCode.E) || Input.GetButtonDown("ButtonX");
 			// Kiểm tra xem người chơi có giữ phím E không
 			if (isKeyDown)
 			{

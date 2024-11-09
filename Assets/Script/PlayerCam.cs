@@ -90,7 +90,7 @@ public class PlayerCam : MonoBehaviour
 
 		// Adjust xRotation and yRotation with sensitivity and multiplier
 		yRotation += mouseX * sensX * multiplier;
-		xRotation += mouseY * sensY * multiplier; // - Y for typical mouse look
+		xRotation -= mouseY * sensY * multiplier; // - Y for typical mouse look
 		xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
 		// Apply rotation
