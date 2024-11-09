@@ -33,7 +33,8 @@ public class ThrowingTutorial : MonoBehaviour
 
 	public void Update()
 	{
-		if ((Input.GetKeyDown(throwKey) ||  Input.GetButtonDown("ButtonX")) && readyToThrow && totalThrows > 0)
+		float triggerInput = Input.GetAxis("RightButton");
+		if ((Input.GetKeyDown(throwKey) || triggerInput > 0.1f) && readyToThrow && totalThrows > 0)
 		{
 			Throw();
 		}

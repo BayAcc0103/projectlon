@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
 	public float winnerTextDisplayTime = 5f; // Duration to show "Winner" message
 	public int healthCount = 100;
 	public float enemyHealthReset = 100f;
+	public Vector3 resetSightRange = new(13.9f,17.1f,21.3f);
+	public float resetattackRange = 8;
 	public bool isWin = false;
 	private bool gameEnded = false;
 	private int terroristsScore = 0; // Terrorists' score
@@ -218,7 +220,7 @@ public class GameManager : MonoBehaviour
 			EnemyAI enemyAIComponent = Enemy[i].GetComponent<EnemyAI>();
 			if (enemyAIComponent != null)
 			{
-				enemyAIComponent.ResetEnemyHealth(enemyHealthReset);
+				enemyAIComponent.ResetEnemyHealth(enemyHealthReset,resetSightRange,resetattackRange);
 			}
 			Enemy[i].transform.position = spawnInitialPositions[i]; // Reset position
 			Enemy[i].SetActive(true); // Reactivate enemy

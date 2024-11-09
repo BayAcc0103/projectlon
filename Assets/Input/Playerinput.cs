@@ -71,6 +71,15 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Save"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ed862bb-b2f1-4b72-8acb-73425f12c9ea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -99,7 +108,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""91f8a168-74e8-47c6-8107-f00216bfd675"",
-                    ""path"": ""<XInputController>/buttonWest"",
+                    ""path"": ""<XInputController>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -120,8 +129,8 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8825f215-5bb2-4302-af56-21e0f470d5f9"",
-                    ""path"": """",
+                    ""id"": ""d391bcd7-6471-410a-b42a-9ef2b7aec12d"",
+                    ""path"": ""<XInputController>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -131,12 +140,12 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d391bcd7-6471-410a-b42a-9ef2b7aec12d"",
-                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""id"": ""0715e818-3760-4a73-9e7e-d8c3cb19efa4"",
+                    ""path"": ""<XInputController>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Climb"",
+                    ""action"": ""Save"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -180,6 +189,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         m_ConsoleInput_Attack = m_ConsoleInput.FindAction("Attack", throwIfNotFound: true);
         m_ConsoleInput_Look = m_ConsoleInput.FindAction("Look", throwIfNotFound: true);
         m_ConsoleInput_Climb = m_ConsoleInput.FindAction("Climb", throwIfNotFound: true);
+        m_ConsoleInput_Save = m_ConsoleInput.FindAction("Save", throwIfNotFound: true);
         // HeadTracking
         m_HeadTracking = asset.FindActionMap("HeadTracking", throwIfNotFound: true);
         m_HeadTracking_HeadSet = m_HeadTracking.FindAction("HeadSet", throwIfNotFound: true);
@@ -249,6 +259,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
     private readonly InputAction m_ConsoleInput_Attack;
     private readonly InputAction m_ConsoleInput_Look;
     private readonly InputAction m_ConsoleInput_Climb;
+    private readonly InputAction m_ConsoleInput_Save;
     public struct ConsoleInputActions
     {
         private @Playerinput m_Wrapper;
@@ -258,6 +269,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_ConsoleInput_Attack;
         public InputAction @Look => m_Wrapper.m_ConsoleInput_Look;
         public InputAction @Climb => m_Wrapper.m_ConsoleInput_Climb;
+        public InputAction @Save => m_Wrapper.m_ConsoleInput_Save;
         public InputActionMap Get() { return m_Wrapper.m_ConsoleInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -282,6 +294,9 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Climb.started += instance.OnClimb;
             @Climb.performed += instance.OnClimb;
             @Climb.canceled += instance.OnClimb;
+            @Save.started += instance.OnSave;
+            @Save.performed += instance.OnSave;
+            @Save.canceled += instance.OnSave;
         }
 
         private void UnregisterCallbacks(IConsoleInputActions instance)
@@ -301,6 +316,9 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Climb.started -= instance.OnClimb;
             @Climb.performed -= instance.OnClimb;
             @Climb.canceled -= instance.OnClimb;
+            @Save.started -= instance.OnSave;
+            @Save.performed -= instance.OnSave;
+            @Save.canceled -= instance.OnSave;
         }
 
         public void RemoveCallbacks(IConsoleInputActions instance)
@@ -371,6 +389,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnClimb(InputAction.CallbackContext context);
+        void OnSave(InputAction.CallbackContext context);
     }
     public interface IHeadTrackingActions
     {

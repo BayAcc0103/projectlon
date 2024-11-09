@@ -838,8 +838,8 @@ InputManager:
     axis: 18
     joyNum: 0
   - serializedVersion: 3
-    m_Name: RightTrigger
-    descriptiveName: Device trigger axis
+    m_Name: RightButton
+    descriptiveName: Device button
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: 

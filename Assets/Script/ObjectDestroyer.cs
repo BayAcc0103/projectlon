@@ -23,8 +23,7 @@ public class ObjectDestroyer : MonoBehaviour
 		// Nếu người chơi ở trong khoảng cách yêu cầu
 		if (distanceToObject <= activationDistance)
 		{	
-			float triggerInput = Input.GetAxis("RightTrigger");
-			bool isKeyDown = Input.GetKey(KeyCode.E) || triggerInput > 0.1f;
+			bool isKeyDown = Input.GetKey(KeyCode.E) || Input.GetButtonDown("ButtonX");
 			// Kiểm tra xem người chơi có giữ phím E không
 			if (isKeyDown)
 			{
@@ -49,5 +48,14 @@ public class ObjectDestroyer : MonoBehaviour
 		}
 	}
 
-	
+	private void DisableObject()
+	{	
+		alive = false;
+		objectToDestroy.SetActive(false); // Tắt đối tượng
+		holdTimeText.text = "";
+		// Gọi GameManager để hiển thị thông báo "Winner"
+		//gameManager.EndGame(true);
+		gameManager.isWin = true;
+		gameManager.EndGame();
+	}
 }
