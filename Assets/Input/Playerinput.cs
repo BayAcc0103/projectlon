@@ -62,6 +62,15 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Climb"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1192ab5-6e49-4e99-be4e-049c43affb71"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -108,6 +117,28 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
                     ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8825f215-5bb2-4302-af56-21e0f470d5f9"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d391bcd7-6471-410a-b42a-9ef2b7aec12d"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -148,6 +179,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         m_ConsoleInput_Jump = m_ConsoleInput.FindAction("Jump", throwIfNotFound: true);
         m_ConsoleInput_Attack = m_ConsoleInput.FindAction("Attack", throwIfNotFound: true);
         m_ConsoleInput_Look = m_ConsoleInput.FindAction("Look", throwIfNotFound: true);
+        m_ConsoleInput_Climb = m_ConsoleInput.FindAction("Climb", throwIfNotFound: true);
         // HeadTracking
         m_HeadTracking = asset.FindActionMap("HeadTracking", throwIfNotFound: true);
         m_HeadTracking_HeadSet = m_HeadTracking.FindAction("HeadSet", throwIfNotFound: true);
@@ -216,6 +248,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
     private readonly InputAction m_ConsoleInput_Jump;
     private readonly InputAction m_ConsoleInput_Attack;
     private readonly InputAction m_ConsoleInput_Look;
+    private readonly InputAction m_ConsoleInput_Climb;
     public struct ConsoleInputActions
     {
         private @Playerinput m_Wrapper;
@@ -224,6 +257,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_ConsoleInput_Jump;
         public InputAction @Attack => m_Wrapper.m_ConsoleInput_Attack;
         public InputAction @Look => m_Wrapper.m_ConsoleInput_Look;
+        public InputAction @Climb => m_Wrapper.m_ConsoleInput_Climb;
         public InputActionMap Get() { return m_Wrapper.m_ConsoleInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -245,6 +279,9 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
+            @Climb.started += instance.OnClimb;
+            @Climb.performed += instance.OnClimb;
+            @Climb.canceled += instance.OnClimb;
         }
 
         private void UnregisterCallbacks(IConsoleInputActions instance)
@@ -261,6 +298,9 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
+            @Climb.started -= instance.OnClimb;
+            @Climb.performed -= instance.OnClimb;
+            @Climb.canceled -= instance.OnClimb;
         }
 
         public void RemoveCallbacks(IConsoleInputActions instance)
@@ -330,6 +370,7 @@ public partial class @Playerinput: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
+        void OnClimb(InputAction.CallbackContext context);
     }
     public interface IHeadTrackingActions
     {
